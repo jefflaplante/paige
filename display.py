@@ -74,7 +74,7 @@ def _draw_data(image, d):
     my_ip = ni.ifaddresses('wlan0')[AF_INET][0]['addr']
     qr = generate_qr_code(f'http://{my_ip}')
 
-    title = f"{d['first_name']}, {d['last_name']} "
+    title = f"{d['first_name']} {d['last_name']}"
 
     # Drawing utility
     draw = ImageDraw.Draw(image)
@@ -83,33 +83,32 @@ def _draw_data(image, d):
     pad = 10
 
     # Title
-    draw.text((pad, pad), title, font = get_font(12), fill = 0)
+    draw.text((pad, pad), title, font = get_font(16), fill = 0)
 
     # IP & QR Code for IP
-    draw.text((80, pad), my_ip, font = get_font(10), fill = 0)
-    image.paste(qr, (120, pad))
+    draw.text((145, pad), my_ip, font = get_font(10), fill = 0)
+    image.paste(qr, (215, pad))
 
     # ---
 
     # Today's Date
-    draw.text((30, 50), f"{current_day} ", font = get_font(20), fill = 0)
-    draw.text((190, 105), f"{current_date_str} ", font = get_font(22), fill = 0)
+    draw.text((30, 50), f"{current_day}, {current_date_str}", font = get_font(24), fill = 0)
 
     # ---
 
-    x_offset = 0 
-    y_offset = 110
+    x_offset = 0
+    y_offset = 0
 
     # Update time
     x_offset += 60
-    y_offset += 4
+    y_offset += 100
 
-    draw.text((x_offset, y_offset), f"updated: {current_time} ", font = get_font(14), fill = 0)
+    draw.text((x_offset, y_offset), f"updated: {current_time} ", font = get_font(16), fill = 0)
 
     # ---
 
     # Divider Line
-    y_offset += 35
+    y_offset += -15
     draw.line(((pad + 20) , y_offset, (image.width - pad - 20), y_offset), fill = 0, width = 3)
 
     return image

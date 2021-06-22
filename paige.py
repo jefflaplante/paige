@@ -16,7 +16,6 @@ if os.path.exists(libdir):
 
 from PIL import Image,ImageDraw,ImageFont
 
-# from waveshare_epd import epd7in5_V2
 from waveshare_epd import epd2in13_V2 as epd
 
 import display
@@ -73,10 +72,14 @@ def main():
 
         # Initialize the display driver
         e = epd.EPD()
-        e.init()
+        e.init(e.FULL_UPDATE)
+
+        EPD_WIDTH       = 122
+        EPD_HEIGHT      = 250
 
         # Generate a new display image
-        img = display.draw((epd.EPD_WIDTH, epd.EPD_HEIGHT), d)
+        img = display.draw((epd.EPD_HEIGHT, epd.EPD_WIDTH), d)
+        img = img.transpose(Image.ROTATE_90)
 
         # Write out image to disk as a jpeg
         img.save('display.jpg', "JPEG")
@@ -94,3 +97,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
